@@ -1,7 +1,6 @@
 import './App.css';
 import {useEffect, useState} from 'react';
-import StudentCardList from './components/StudentCardList/StudentCardList';
-
+import StudentContainer from './components/StudentContainer/StudentContainer';
 const API = process.env.REACT_APP_API_URL;
 
 function App() {
@@ -17,7 +16,7 @@ useEffect(() => {
 
   return (
    <div>
-    <StudentCardList students={students}/>
+    <StudentContainer students={students}/>
    </div>
   );
 }

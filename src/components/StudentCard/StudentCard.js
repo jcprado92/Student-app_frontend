@@ -1,33 +1,57 @@
-import './StudentCard.css'
+import "./StudentCard.scss";
+import Add from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
-import React from 'react'
+
+import React, { useState } from "react";
 
 function StudentCard({ student }) {
-const numericGrades = student.grades.map((grade) => Number(grade));
-let total = 0;
-for (const grade of numericGrades) {
-    total += grade;
-  }
-const average = total / numericGrades.length;
+  const [showGrades, setShowGrades] = useState(false);
+
+  const toggleGrades = () => {
+    if (!showGrades) {
+      // TODO: change plus icon to loader
+
+      setShowGrades(true);
+    } else {
+      setShowGrades(false);
+    }
+  };
 
   return (
-    <div className="StudentCard" key={student.id}>
-      <div className="StudentCard__avatar">
-        <img src={student.pic} alt={`${student.firstName} ${student.lastName}`} />
+    <div className="studentCard">
+      <div className="studentCard__image">
+        <img src={student.pic} alt={`${student.firstName} ${student.lastName}`}/>
       </div>
-      <div className="StudentCard__info">
-        <h1>
+      <div className="studentCard__profile">
+        <div className="studentCard__name">
           {student.firstName} {student.lastName}
-        </h1>
-        <ul>
-          <li>Email: {student.email}</li>
-          <li>Company: {student.company} </li>
-          <li>Skill: {student.skill}</li>
-          <li>Average: {average}%</li>
-        </ul>
+        </div>
+        <div className="studentCard__info">
+          <div>Email: {student.email}</div>
+          <div>Company: {student.company}</div>
+          <div>Skill: {student.skill}</div>
+          <div
+            className="studentCard__grades"
+            style={{ display: showGrades ? "block" : "none" }}
+          >
+            {student.grades.map((grade, index) => {
+              return (
+                <div className="studentCard__grade" key={index + 1}>
+                  <span>Test {index + 1}:</span>
+                  <span>{grade}%</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+      <div className="studentCard__toggleGrades">
+        {!showGrades && <Add onClick={toggleGrades} fontSize="inherit" />}
+        {showGrades && <RemoveIcon onClick={toggleGrades} fontSize="inherit" />}
       </div>
     </div>
-  )
+  );
 }
 
-export default StudentCard
+export default StudentCard;
